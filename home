@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+  <title>Popup Widget</title>
+
+  <!-- Preload de la imagen para cargarla antes de renderizar el widget -->
+  <link rel="preload" href="https://dexkit-storage.nyc3.digitaloceanspaces.com/dexkit/media-library/account/0x8ed0b73f3440eaf27d14d429713a5ff7eea03691/Dise%C3%83%C2%B1o%20sin%20t%C3%83%C2%ADtulo%20%286%29.png" as="image">
+
+  <style>
+    /* Reseteo de márgenes y padding para evitar cualquier desbordamiento */
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+    }
+
+    /* Contenedor de la página */
+    body {
+      font-family: Arial, sans-serif;
+      height: 100vh;
+      overflow: hidden; /* Esto bloquea el scroll en toda la página */
+    }
+
+    /* Contenedor principal de la página */
+    .page-container {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      overflow: hidden; /* Bloquear scroll dentro de este contenedor */
+    }
+
+    /* Checkbox para controlar el estado del popup */
+    .widget-popup-checkbox {
+      display: none;
+    }
+
+    /* Contenedor principal del widget */
+    .widget-popup {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      background-color: rgba(0, 0, 0, 0.5); /* Fondo semi-transparente */
+      z-index: 999999;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      overflow: hidden; /* Prevenir scroll dentro del popup */
+    }
+
+    /* Ocultar el popup cuando el checkbox está marcado */
+    .widget-popup-checkbox:checked ~ .page-container .widget-popup {
+      display: none;
+    }
+
+    /* Contenido del widget */
+    .widget-popup-content {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      flex-direction: column;
+    }
+
+    /* Imagen de fondo */
+    .widget-popup-image {
+      width: 100%;
+      height: 100%;
+      object-fit: cover; /* Hace que la imagen se ajuste sin deformarse */
+      object-position: center; /* Centra la imagen */
+    }
+
+    /* Botón del widget */
+    .widget-popup-button {
+      position: absolute;
+      top: 75%; /* Mover el botón al 75% de la altura total */
+      left: 50%;
+      transform: translateX(-50%);
+      padding: 15px 30px;
+      background-color: #ff5e57;
+      color: white;
+      font-size: 20px;
+      font-weight: bold;
+      border-radius: 30px;
+      border: none;
+      cursor: pointer;
+      width: 80%; /* Asegura que el botón ocupe casi todo el ancho */
+      text-align: center;
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Popup Widget -->
+  <input type="checkbox" class="widget-popup-checkbox" id="widget-popup-check">
+  <div class="page-container">
+    <div class="widget-popup">
+      <div class="widget-popup-content">
+        <!-- Imagen de fondo que cambiará según el día -->
+        <img id="popup-image" class="widget-popup-image" alt="Imagen de fondo">
+        <label class="widget-popup-button" for="widget-popup-check">Explore</label>
+      </div>
+    </div>
+  </div>
+
+  <script>
+    // Función para cambiar la imagen según el día
+    function setPopupImage() {
+      const currentDay = new Date().getDay(); // Obtiene el día de la semana (0 - 6, donde 0 es domingo)
+      let imageUrl = '';
+
+      // Determina la URL de la imagen según el día de la semana
+      if (currentDay === 0) {
+        // Domingo
+        imageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS1a_6O84lLITQqAg4MiuNNanUJtCL2dYzoGw&s';
+      } else if (currentDay === 1) {
+        // Lunes
+        imageUrl = 'https://wallpapers.com/images/hd/1080x1920-ugd930ckdcujq44s.jpg';
+      } else if (currentDay === 2) {
+        // Martes
+        imageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRe5bQsY0oMi2rDUknBZFaBpshp1O02nOlS_w&s';
+      } else if (currentDay === 3) {
+        // Miércoles
+        imageUrl = 'https://i.pinimg.com/736x/18/1e/e8/181ee8ed9c9638926b46dccc98b7b85d.jpg';
+      } else if (currentDay === 4) {
+        // Jueves
+        imageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSwhqDll84wIF4vZ2QBDwuypFLwfIpfjAkTGw&s';
+      } else if (currentDay === 5) {
+        // Viernes
+        imageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTCx1LIhclG1259k8O7apJhWVyFMAA4S79rZA&s';
+      } else {
+        // Sábado
+        imageUrl = 'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKItMltUGbcNq880aED2fF4jOYFueSOgea0A&s';
+      }
+
+      // Asigna la URL de la imagen al elemento con el ID 'popup-image'
+      document.getElementById('popup-image').src = imageUrl;
+    }
+
+    // Llama a la función para cambiar la imagen al cargar la página
+    window.onload = setPopupImage;
+  </script>
+
+</body>
+</html>
+
